@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found - Complete System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4f46e5;
+            --primary-dark: #4338ca;
+            --secondary-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--light-bg);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--card-bg);
+            box-shadow: var(--shadow);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-color);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .action-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .action-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        /* Forms */
+        .form-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-card h2 {
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-block {
+            width: 100%;
+            display: block;
+        }
+
+        /* Item Cards */
+        .items-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .item-card.lost {
+            border-left-color: var(--danger-color);
+        }
+
+        .item-card.found {
+            border-left-color: var(--success-color);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        .item-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .item-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-lost {
+            background: #fee2e2;
+            color: var(--danger-color);
+        }
+
+        .badge-found {
+            background: #d1fae5;
+            color: var(--success-color);
+        }
+
+        .badge-helpdesk {
+            background: #dbeafe;
+            color: #3b82f6;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .item-details {
+            margin-top: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 100px;
+        }
+
+        .detail-value {
+            color: var(--text-primary);
+        }
+
+        .item-description {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        /* Filters */
+        .filters {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h2 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid var(--success-color);
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border: 1px solid #3b82f6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--text-secondary);
+            box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--card-bg);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .filter-group {
+                flex-direction: column;
+            }
+            
+            .filter-item {
+                width: 100%;
+            }
+            
+            .items-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .form-card {
+                padding: 1.5rem;
+            }
+            
+            .stat-card h4 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>🔍 Lost & Found</h1>
+            </div>
+            <button class="menu-toggle">☰</button>
+            <ul class="nav-menu">
+                <li><a onclick="showPage('home')" class="active">Home</a></li>
+                <li><a onclick="showPage('report-lost')">Report Lost</a></li>
+                <li><a onclick="showPage('report-found')">Report Found</a></li>
+                <li><a onclick="showPage('browse')">Browse Items</a></li>
+                <li><a onclick="showPage('helpdesk')">Helpdesk</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page">
+        <main class="container">
+            <section class="hero">
+                <h2>Welcome to Campus Lost & Found</h2>
+                <p>Help reunite lost items with their owners</p>
+                
+                <div class="card-grid">
+                    <div class="action-card" onclick="showPage('report-lost')">
+                        <div class="card-icon">📢</div>
+                        <h3>Report Lost Item</h3>
+                        <p>Lost something? Let us know and we'll help you find it</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="showPage('report-found')">
+                        <div class="card-icon">✨</div>
+                        <h3>Report Found Item</h3>
+                        <p>Found something? Help return it to its owner</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="showPage('browse')">
+                        <div class="card-icon">🔎</div>
+                        <h3>Browse Items</h3>
+                        <p>Search through reported lost and found items</p>
+                    </div>
+                    
+                    <div class="action-card" onclick="showPage('helpdesk')">
+                        <div class="card-icon">🏢</div>
+                        <h3>Helpdesk Collection</h3>
+                        <p>View items stored at the helpdesk</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="stats">
+                <div class="stat-card">
+                    <h4 id="lostCount">0</h4>
+                    <p>Lost Items</p>
+                </div>
+                <div class="stat-card">
+                    <h4 id="foundCount">0</h4>
+                    <p>Found Items</p>
+                </div>
+                <div class="stat-card">
+                    <h4 id="helpdeskCount">0</h4>
+                    <p>At Helpdesk</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- REPORT LOST PAGE -->
+    <div id="report-lost-page" class="page hidden">
+        <main class="container">
+            <div class="page-header">
+                <h2>📢 Report Lost Item</h2>
+                <p>Fill out the form below to report your lost item</p>
+            </div>
+
+            <div class="form-card">
+                <form id="lostItemForm">
+                    <div class="form-group">
+                        <label for="lost-itemName">Item Name *</label>
+                        <input type="text" id="lost-itemName" required 
+                               placeholder="e.g., Blue Backpack, iPhone 13, Keys">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lost-description">Description *</label>
+                        <textarea id="lost-description" required 
+                                  placeholder="Provide detailed description including color, brand, size, distinguishing features..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lost-date">Date Lost *</label>
+                        <input type="date" id="lost-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lost-location">Location *</label>
+                        <input type="text" id="lost-location" required 
+                               placeholder="e.g., Library 2nd Floor, Main Cafeteria, Parking Lot B">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lost-contactName">Your Name *</label>
+                        <input type="text" id="lost-contactName" required 
+                               placeholder="Full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lost-contactEmail">Email *</label>
+                        <input type="email" id="lost-contactEmail" required 
+                               placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lost-contactPhone">Phone Number</label>
+                        <input type="tel" id="lost-contactPhone" 
+                               placeholder="(555) 123-4567">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Submit Lost Item Report</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- REPORT FOUND PAGE -->
+    <div id="report-found-page" class="page hidden">
+        <main class="container">
+            <div class="page-header">
+                <h2>✨ Report Found Item</h2>
+                <p>Help reunite a lost item with its owner</p>
+            </div>
+
+            <div class="form-card">
+                <form id="foundItemForm">
+                    <div class="form-group">
+                        <label for="found-itemName">Item Name *</label>
+                        <input type="text" id="found-itemName" required 
+                               placeholder="e.g., Blue Backpack, iPhone 13, Keys">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="found-description">Description *</label>
+                        <textarea id="found-description" required 
+                                  placeholder="Provide detailed description including color, brand, size, distinguishing features..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="found-date">Date Found *</label>
+                        <input type="date" id="found-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="found-location">Location Found *</label>
+                        <input type="text" id="found-location" required 
+                               placeholder="e.g., Library 2nd Floor, Main Cafeteria, Parking Lot B">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="found-atHelpdesk">
+                        <label for="found-atHelpdesk">Item has been turned in to the Helpdesk</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="found-contactName">Your Name *</label>
+                        <input type="text" id="found-contactName" required 
+                               placeholder="Full name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="found-contactEmail">Email *</label>
+                        <input type="email" id="found-contactEmail" required 
+                               placeholder="your.email@example.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="found-contactPhone">Phone Number</label>
+                        <input type="tel" id="found-contactPhone" 
+                               placeholder="(555) 123-4567">
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-block">Submit Found Item Report</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- BROWSE PAGE -->
+    <div id="browse-page" class="page hidden">
+        <main class="container">
+            <div class="page-header">
+                <h2>🔎 Browse Items</h2>
+                <p>Search through all reported lost and found items</p>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <div class="filter-item">
+                        <label for="browse-search">Search</label>
+                        <input type="text" id="browse-search" placeholder="Search by item name, description, or location...">
+                    </div>
+                    <div class="filter-item">
+                        <label for="browse-type">Type</label>
+                        <select id="browse-type">
+                            <option value="all">All Items</option>
+                            <option value="lost">Lost Items</option>
+                            <option value="found">Found Items</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="browse-helpdesk">Location</label>
+                        <select id="browse-helpdesk">
+                            <option value="all">All Locations</option>
+                            <option value="helpdesk">At Helpdesk</option>
+                            <option value="other">Other Location</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="browse-items" class="items-container"></div>
+
+            <div id="browse-empty" class="empty-state hidden">
+                <div class="empty-state-icon">📭</div>
+                <h3>No items found</h3>
+                <p>Try adjusting your search or filters</p>
+            </div>
+        </main>
+    </div>
+
+    <!-- HELPDESK PAGE -->
+    <div id="helpdesk-page" class="page hidden">
+        <main class="container">
+            <div class="page-header">
+                <h2>🏢 Helpdesk Collection</h2>
+                <p>Items currently stored at the helpdesk waiting to be claimed</p>
+            </div>
+
+            <div class="alert alert-info">
+                <strong>📍 Helpdesk Location:</strong> Main Building, Ground Floor, Room 101<br>
+                <strong>⏰ Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM<br>
+                <strong>📞 Contact:</strong> helpdesk@example.com | (555) 123-4567
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <div class="filter-item">
+                        <label for="helpdesk-search">Search Items at Helpdesk</label>
+                        <input type="text" id="helpdesk-search" placeholder="Search by item name or description...">
+                    </div>
+                    <div class="filter-item">
+                        <label for="helpdesk-sort">Sort By</label>
+                        <select id="helpdesk-sort">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="name">Item Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="helpdesk-items" class="items-container"></div>
+
+            <div id="helpdesk-empty" class="empty-state hidden">
+                <div class="empty-state-icon">🏢</div>
+                <h3>No items at helpdesk</h3>
+                <p>There are currently no items stored at the helpdesk</p>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Lost & Found System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Database management using localStorage
+        const DB_KEY = 'lostFoundItems';
+
+        function getAllItems() {
+            const items = localStorage.getItem(DB_KEY);
+            return items ? JSON.parse(items) : [];
+        }
+
+        function saveItems(items) {
+            localStorage.setItem(DB_KEY, JSON.stringify(items));
+        }
+
+        function addItem(item) {
+            const items = getAllItems();
+            item.id = Date.now().toString();
+            item.createdAt = new Date().toISOString();
+            items.push(item);
+            saveItems(items);
+            return item;
+        }
+
+        function getItemsByType(type) {
+            const items = getAllItems();
+            return items.filter(item => item.type === type);
+        }
+
+        function getHelpdeskItems() {
+            const items = getAllItems();
+            return items.filter(item => item.atHelpdesk === true);
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        function showSuccessMessage(message) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-success';
+            alertDiv.textContent = message;
+            
+            const container = document.querySelector('.page:not(.hidden) .container');
+            if (container) {
+                container.insertBefore(alertDiv, container.firstChild);
+                
+                setTimeout(() => {
+                    alertDiv.remove();
+                }, 3000);
+            }
+        }
+
+        // Navigation
+        function showPage(pageName) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            const selectedPage = document.getElementById(pageName + '-page');
+            if (selectedPage) {
+                selectedPage.classList.remove('hidden');
+            }
+            
+            // Update nav active state
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Close mobile menu
+            document.querySelector('.nav-menu').classList.remove('active');
+            
+            // Load page-specific content
+            if (pageName === 'home') {
+                updateStats();
+            } else if (pageName === 'browse') {
+                renderBrowseItems();
+            } else if (pageName === 'helpdesk') {
+                renderHelpdeskItems();
+            }
+        }
+
+        // Update stats on home page
+        function updateStats() {
+            const items = getAllItems();
+            const lostItems = items.filter(item => item.type === 'lost');
+            const foundItems = items.filter(item => item.type === 'found');
+            const helpdeskItems = items.filter(item => item.atHelpdesk);
+            
+            document.getElementById('lostCount').textContent = lostItems.length;
+            document.getElementById('foundCount').textContent = foundItems.length;
+            document.getElementById('helpdeskCount').textContent = helpdeskItems.length;
+        }
+
+        // Lost Item Form
+        document.getElementById('lostItemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                type: 'lost',
+                itemName: document.getElementById('lost-itemName').value,
+                description: document.getElementById('lost-description').value,
+                date: document.getElementById('lost-date').value,
+                location: document.getElementById('lost-location').value,
+                contactName: document.getElementById('lost-contactName').value,
+                contactEmail: document.getElementById('lost-contactEmail').value,
+                contactPhone: document.getElementById('lost-contactPhone').value,
+                atHelpdesk: false
+            };
+            
+            addItem(formData);
+            showSuccessMessage('Lost item reported successfully! We will notify you if it is found.');
+            
+            this.reset();
+            
+            setTimeout(() => {
+                showPage('browse');
+            }, 2000);
+        });
+
+        // Found Item Form
+        document.getElementById('foundItemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                type: 'found',
+                itemName: document.getElementById('found-itemName').value,
+                description: document.getElementById('found-description').value,
+                date: document.getElementById('found-date').value,
+                location: document.getElementById('found-location').value,
+                contactName: document.getElementById('found-contactName').value,
+                contactEmail: document.getElementById('found-contactEmail').value,
+                contactPhone: document.getElementById('found-contactPhone').value,
+                atHelpdesk: document.getElementById('found-atHelpdesk').checked
+            };
+            
+            addItem(formData);
+            
+            const message = formData.atHelpdesk 
+                ? 'Found item reported and marked as stored at Helpdesk!' 
+                : 'Found item reported successfully! The owner can now contact you.';
+            
+            showSuccessMessage(message);
+            
+            this.reset();
+            
+            setTimeout(() => {
+                showPage('browse');
+            }, 2000);
+        });
+
+        // Browse Items
+        function renderBrowseItems() {
+            const searchQuery = document.getElementById('browse-search').value.toLowerCase();
+            const typeFilter = document.getElementById('browse-type').value;
+            const helpdeskFilter = document.getElementById('browse-helpdesk').value;
+            
+            let items = getAllItems();
+            
+            // Apply filters
+            if (searchQuery) {
+                items = items.filter(item => 
+                    item.itemName.toLowerCase().includes(searchQuery) ||
+                    item.description.toLowerCase().includes(searchQuery) ||
+                    item.location.toLowerCase().includes(searchQuery)
+                );
+            }
+            
+            if (typeFilter !== 'all') {
+                items = items.filter(item => item.type === typeFilter);
+            }
+            
+            if (helpdeskFilter === 'helpdesk') {
+                items = items.filter(item => item.atHelpdesk === true);
+            } else if (helpdeskFilter === 'other') {
+                items = items.filter(item => item.atHelpdesk !== true);
+            }
+            
+            items.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            const container = document.getElementById('browse-items');
+            const emptyState = document.getElementById('browse-empty');
+            
+            if (items.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = items.map(item => `
+                <div class="item-card ${item.type}">
+                    <div class="item-header">
+                        <h3 class="item-title">${item.itemName}</h3>
+                        <span class="item-badge badge-${item.type}">
+                            ${item.type === 'lost' ? '📢 Lost' : '✨ Found'}
+                        </span>
+                    </div>
+                    
+                    ${item.atHelpdesk ? '<span class="item-badge badge-helpdesk">🏢 At Helpdesk</span>' : ''}
+                    
+                    <div class="item-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">${formatDate(item.date)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-value">${item.location}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Contact:</span>
+                            <span class="detail-value">${item.contactName}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Email:</span>
+                            <span class="detail-value">${item.contactEmail}</span>
+                        </div>
+                        ${item.contactPhone ? `
+                        <div class="detail-row">
+                            <span class="detail-label">Phone:</span>
+                            <span class="detail-value">${item.contactPhone}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="item-description">
+                        <strong>Description:</strong><br>
+                        ${item.description}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Helpdesk Items
+        function renderHelpdeskItems() {
+            const searchQuery = document.getElementById('helpdesk-search').value.toLowerCase();
+            const sortOrder = document.getElementById('helpdesk-sort').value;
+            
+            let items = getHelpdeskItems();
+            
+            if (searchQuery) {
+                items = items.filter(item => 
+                    item.itemName.toLowerCase().includes(searchQuery) ||
+                    item.description.toLowerCase().includes(searchQuery)
+                );
+            }
+            
+            items.sort((a, b) => {
+                switch(sortOrder) {
+                    case 'newest':
+                        return new Date(b.date) - new Date(a.date);
+                    case 'oldest':
+                        return new Date(a.date) - new Date(b.date);
+                    case 'name':
+                        return a.itemName.localeCompare(b.itemName);
+                    default:
+                        return 0;
+                }
+            });
+            
+            const container = document.getElementById('helpdesk-items');
+            const emptyState = document.getElementById('helpdesk-empty');
+            
+            if (items.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            container.innerHTML = items.map(item => `
+                <div class="item-card ${item.type}">
+                    <div class="item-header">
+                        <h3 class="item-title">${item.itemName}</h3>
+                        <span class="item-badge badge-${item.type}">
+                            ${item.type === 'lost' ? '📢 Lost' : '✨ Found'}
+                        </span>
+                    </div>
+                    
+                    <span class="item-badge badge-helpdesk">🏢 At Helpdesk</span>
+                    
+                    <div class="item-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Date:</span>
+                            <span class="detail-value">${formatDate(item.date)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Found at:</span>
+                            <span class="detail-value">${item.location}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Reported by:</span>
+                            <span class="detail-value">${item.contactName}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Contact:</span>
+                            <span class="detail-value">${item.contactEmail}</span>
+                        </div>
+                        ${item.contactPhone ? `
+                        <div class="detail-row">
+                            <span class="detail-label">Phone:</span>
+                            <span class="detail-value">${item.contactPhone}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="item-description">
+                        <strong>Description:</strong><br>
+                        ${item.description}
+                    </div>
+                    
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                        <p style="font-size: 0.9rem; color: var(--text-secondary);">
+                            <strong>To claim this item:</strong> Visit the helpdesk during business hours with a valid ID and proof of ownership.
+                        </p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Event listeners for filters
+        document.getElementById('browse-search').addEventListener('input', renderBrowseItems);
+        document.getElementById('browse-type').addEventListener('change', renderBrowseItems);
+        document.getElementById('browse-helpdesk').addEventListener('change', renderBrowseItems);
+        
+        document.getElementById('helpdesk-search').addEventListener('input', renderHelpdeskItems);
+        document.getElementById('helpdesk-sort').addEventListener('change', renderHelpdeskItems);
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+        });
+
+        // Set max date to today for date inputs
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('lost-date').max = today;
+        document.getElementById('found-date').max = today;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+        });
+    </script>
+</body>
+</html>
